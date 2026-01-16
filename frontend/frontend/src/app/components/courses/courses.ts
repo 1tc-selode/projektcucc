@@ -37,7 +37,7 @@ export class Courses {
       description: ['', Validators.required],
       status: ['planned', Validators.required],
       difficulty: ['beginner', Validators.required],
-      instructor: ['', Validators.required]
+      instructor_id: ['', Validators.required]
     });
     
     this.search$.pipe(debounceTime(300))

@@ -18,7 +18,13 @@ export class Student {
   load(search: string = '', sortBy: string = 'name', sortOrder: string = 'asc') {
     const params = `?search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
     this.http.get<any>(`${this.api}${params}`)
-      .subscribe(res => this.studentsSubject.next(res.data || res));
+      .subscribe({
+        next: (res) => this.studentsSubject.next(res.data || res || []),
+        error: (err) => {
+          console.error('Failed to load students:', err);
+          this.studentsSubject.next([]);
+        }
+      });
   }
 
   getById(id: number) {

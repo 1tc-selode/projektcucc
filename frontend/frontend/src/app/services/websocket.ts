@@ -20,7 +20,8 @@ export class Websocket {
         wsHost: '127.0.0.1',
         wsPort: 6001,
         forceTLS: false,
-        disableStats: true
+        disableStats: true,
+        enabledTransports: ['ws', 'wss']
       });
 
       this.echo.channel('courses')

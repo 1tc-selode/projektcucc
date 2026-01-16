@@ -18,7 +18,13 @@ export class Course {
   load(search: string = '', sortBy: string = 'created_at', sortOrder: string = 'desc', page: number = 1) {
     const params = `?search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}`;
     this.http.get<any>(`${this.api}${params}`)
-      .subscribe(res => this.coursesSubject.next(res.data));
+      .subscribe({
+        next: (res) => this.coursesSubject.next(res.data || []),
+        error: (err) => {
+          console.error('Failed to load courses:', err);
+          this.coursesSubject.next([]);
+        }
+      });
   }
 
   getById(id: number) {
