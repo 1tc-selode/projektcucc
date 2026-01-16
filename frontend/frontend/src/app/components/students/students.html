@@ -1,0 +1,122 @@
+<div class="card">
+  <div class="header">
+    <h1>Students Management</h1>
+    <button (click)="openForm()" class="btn-primary">+ Add Student</button>
+  </div>
+
+  <div class="search-bar">
+    <input 
+      type="text" 
+      placeholder="Search students by name or email..." 
+      (input)="search$.next($any($event.target).value)"
+    />
+  </div>
+
+  <!-- Student Form Modal -->
+  <div *ngIf="showForm" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ editingId ? 'Edit Student' : 'New Student' }}</h2>
+        <button (click)="closeForm()" class="btn-close">×</button>
+      </div>
+      
+      <form [formGroup]="studentForm" (ngSubmit)="save()">
+        <div class="form-group">
+          <label>Name *</label>
+          <input formControlName="name" placeholder="Student name" />
+          <span class="error" *ngIf="studentForm.get('name')?.invalid && studentForm.get('name')?.touched">
+            Name is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" formControlName="email" placeholder="student@email.com" />
+          <span class="error" *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+            Valid email is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input formControlName="phone" placeholder="Phone number" />
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <textarea formControlName="address" placeholder="Address" rows="3"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="closeForm()" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="studentForm.invalid">
+            {{ editingId ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Course Assignment Modal -->
+  <div *ngIf="showCourseAssign" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Assign Course to {{ selectedStudent?.name }}</h2>
+        <button (click)="closeCourseAssign()" class="btn-close">×</button>
+      </div>
+      
+      <div class="course-list">
+        <div *ngFor="let course of courses$ | async" class="course-item" (click)="assignCourse(course.id)">
+          <div>
+            <strong>{{ course.title }}</strong>
+            <span class="badge" [class]="'badge-' + course.status">
+              {{ course.status }}
+            </span>
+          </div>
+          <button class="btn-primary">Assign</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Students Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('name')" class="sortable">
+            Name {{ sortBy === 'name' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+          </th>
+          <th (click)="sort('email')" class="sortable">
+            Email {{ sortBy === 'email' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+          </th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Courses</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students$ | async">
+          <td><strong>{{ student.name }}</strong></td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.phone || '-' }}</td>
+          <td>{{ student.address || '-' }}</td>
+          <td>
+            <div class="courses-tags">
+              <span *ngFor="let course of student.courses" class="course-tag">
+                {{ course.title }}
+                <button (click)="removeCourse(student.id, course.id)" class="remove-tag">×</button>
+              </span>
+              <button (click)="openCourseAssign(student)" class="btn-add-course">+</button>
+            </div>
+          </td>
+          <td class="actions">
+            <button (click)="edit(student)" class="btn-icon btn-edit" title="Edit">✏️</button>
+            <button (click)="del(student.id)" class="btn-icon btn-delete" title="Delete">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

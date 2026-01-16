@@ -1,0 +1,35 @@
+<div class="card">
+  <h1>Dashboard</h1>
+  
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Courses</h3>
+      <p class="stat-number">{{ totalCourses$ | async }}</p>
+    </div>
+    
+    <div class="stat-card stat-success">
+      <h3>Active Courses</h3>
+      <p class="stat-number">{{ activeCourses$ | async }}</p>
+    </div>
+    
+    <div class="stat-card stat-info">
+      <h3>Completed Courses</h3>
+      <p class="stat-number">{{ completedCourses$ | async }}</p>
+    </div>
+  </div>
+  
+  <h2>Recent Courses</h2>
+  <div class="course-list">
+    <div *ngFor="let course of courses$ | async" class="course-item">
+      <div>
+        <strong>{{ course.title }}</strong>
+        <span class="badge" [class.badge-active]="course.status === 'active'" 
+              [class.badge-completed]="course.status === 'completed'"
+              [class.badge-planned]="course.status === 'planned'">
+          {{ course.status }}
+        </span>
+      </div>
+      <small>{{ course.instructor }}</small>
+    </div>
+  </div>
+</div>

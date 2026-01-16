@@ -1,0 +1,127 @@
+<div class="card">
+  <div class="hero">
+    <h1>About This Project</h1>
+    <p class="tagline">A modern course management system built with cutting-edge technologies</p>
+  </div>
+
+  <section class="section">
+    <h2>🎯 Project Goals</h2>
+    <div class="goals-grid">
+      <div class="goal-card">
+        <div class="goal-icon">📚</div>
+        <h3>Educational Excellence</h3>
+        <p>Provide a comprehensive platform for managing courses, students, and instructors efficiently.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-icon">⚡</div>
+        <h3>Real-time Updates</h3>
+        <p>Leverage WebSocket technology for instant notifications and live data synchronization across all clients.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-icon">🎨</div>
+        <h3>Modern UI/UX</h3>
+        <p>Deliver an intuitive, responsive interface following contemporary design principles and best practices.</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-icon">🔒</div>
+        <h3>Robust Architecture</h3>
+        <p>Build a scalable, maintainable system with proper separation of concerns and clean code principles.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>👥 Team</h2>
+    <div class="team-grid">
+      <div *ngFor="let member of teamMembers" class="team-card">
+        <div class="member-icon">{{ member.icon }}</div>
+        <h3>{{ member.name }}</h3>
+        <p class="role">{{ member.role }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>🛠️ Technologies Used</h2>
+    <div class="tech-grid">
+      <div *ngFor="let tech of technologies" class="tech-card">
+        <div class="tech-icon">{{ tech.icon }}</div>
+        <h3>{{ tech.name }}</h3>
+        <p class="version">{{ tech.version }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>✨ Key Features</h2>
+    <div class="features-list">
+      <div class="feature-item">
+        <span class="check">✓</span>
+        <div>
+          <strong>Complete CRUD Operations</strong>
+          <p>Full create, read, update, and delete functionality for courses, students, and instructors</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="check">✓</span>
+        <div>
+          <strong>Advanced Search & Filtering</strong>
+          <p>Debounced search with sorting and pagination capabilities</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="check">✓</span>
+        <div>
+          <strong>Reactive Forms</strong>
+          <p>Client-side validation with comprehensive error messages</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="check">✓</span>
+        <div>
+          <strong>Real-time Synchronization</strong>
+          <p>WebSocket-based live updates across all connected clients</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="check">✓</span>
+        <div>
+          <strong>Responsive Design</strong>
+          <p>Mobile-first approach with full responsiveness across all devices</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="check">✓</span>
+        <div>
+          <strong>RESTful API Integration</strong>
+          <p>Clean API communication with proper error handling</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>🏗️ Architecture</h2>
+    <div class="architecture">
+      <div class="arch-layer">
+        <h3>Frontend Layer</h3>
+        <p>Angular 19 with standalone components, RxJS for state management, and reactive programming patterns</p>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <h3>Communication Layer</h3>
+        <p>RESTful APIs for CRUD operations, WebSocket (Laravel Echo + Pusher) for real-time updates</p>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <h3>Backend Layer</h3>
+        <p>Laravel 11 with MVC architecture, API resources, and event broadcasting</p>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <h3>Database Layer</h3>
+        <p>MySQL with migrations, relationships, and optimized queries</p>
+      </div>
+    </div>
+  </section>
+</div>
