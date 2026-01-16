@@ -68,14 +68,26 @@ export class Students {
     const data = this.studentForm.value;
     
     if (this.editingId) {
-      this.studentService.update(this.editingId, data).subscribe(() => {
-        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
-        this.closeForm();
+      this.studentService.update(this.editingId, data).subscribe({
+        next: () => {
+          this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
+          this.closeForm();
+        },
+        error: (err) => {
+          console.error('Failed to update student:', err);
+          alert('Failed to update student. Please check the form.');
+        }
       });
     } else {
-      this.studentService.create(data).subscribe(() => {
-        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
-        this.closeForm();
+      this.studentService.create(data).subscribe({
+        next: () => {
+          this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
+          this.closeForm();
+        },
+        error: (err) => {
+          console.error('Failed to create student:', err);
+          alert('Failed to create student. Please check the form.');
+        }
       });
     }
   }

@@ -63,14 +63,26 @@ export class Instructors {
     const data = this.instructorForm.value;
     
     if (this.editingId) {
-      this.instructorService.update(this.editingId, data).subscribe(() => {
-        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
-        this.closeForm();
+      this.instructorService.update(this.editingId, data).subscribe({
+        next: () => {
+          this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
+          this.closeForm();
+        },
+        error: (err) => {
+          console.error('Failed to update instructor:', err);
+          alert('Failed to update instructor. Please check the form.');
+        }
       });
     } else {
-      this.instructorService.create(data).subscribe(() => {
-        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
-        this.closeForm();
+      this.instructorService.create(data).subscribe({
+        next: () => {
+          this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
+          this.closeForm();
+        },
+        error: (err) => {
+          console.error('Failed to create instructor:', err);
+          alert('Failed to create instructor. Please check the form.');
+        }
       });
     }
   }
