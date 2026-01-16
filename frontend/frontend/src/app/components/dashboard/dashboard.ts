@@ -14,6 +14,7 @@ export class Dashboard {
   totalCourses$;
   activeCourses$;
   completedCourses$;
+  valami: string = 'dashboard';
   
   constructor(private course: Course) {
     this.courses$ = this.course.courses$;
