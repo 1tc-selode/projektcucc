@@ -1,0 +1,742 @@
+{
+	"info": {
+		"_postman_id": "skillforge-api-collection",
+		"name": "SkillForge API Collection",
+		"description": "Teljes API végpontok gyűjteménye a SkillForge tanfolyam- és tanuláskövető platform backend részéhez",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "skillforge-team"
+	},
+	"item": [
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"stats"
+							]
+						},
+						"description": "Lekéri a dashboard statisztikákat: összes kurzus, aktív kurzusok, befejezett kurzusok, tervezett kurzusok száma"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses?search=&status=&difficulty=&sort=created_at&dir=desc&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Keresés cím vagy leírás alapján"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Szűrés státusz szerint (planned|active|completed)"
+								},
+								{
+									"key": "difficulty",
+									"value": "",
+									"description": "Szűrés nehézség szerint (beginner|intermediate|advanced)"
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Rendezési mező"
+								},
+								{
+									"key": "dir",
+									"value": "desc",
+									"description": "Rendezési irány (asc|desc)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Elemek száma oldalanként"
+								}
+							]
+						},
+						"description": "Lista az összes kurzust lapozással, kereséssel és rendezéssel"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Laravel Alapok\",\n    \"description\": \"Tanuld meg a Laravel keretrendszert a nulláról\",\n    \"status\": \"planned\",\n    \"difficulty\": \"beginner\",\n    \"instructor_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						},
+						"description": "Új kurzus létrehozása. Automatikusan küld WebSocket eseményt."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"1"
+							]
+						},
+						"description": "Egy adott kurzus részletes adatainak lekérése oktató és hallgatók listájával"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Haladó Laravel Technikák\",\n    \"status\": \"active\",\n    \"difficulty\": \"intermediate\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/courses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"1"
+							]
+						},
+						"description": "Kurzus adatainak módosítása"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"1"
+							]
+						},
+						"description": "Kurzus törlése"
+					},
+					"response": []
+				},
+				{
+					"name": "Attach Student to Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses/1/students/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"1",
+								"students",
+								"1"
+							]
+						},
+						"description": "Hallgató hozzárendelése kurzushoz"
+					},
+					"response": []
+				},
+				{
+					"name": "Detach Student from Course",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses/1/students/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"1",
+								"students",
+								"1"
+							]
+						},
+						"description": "Hallgató eltávolítása kurzusból"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Get All Students",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/students?search=&sort=name&dir=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Keresés név vagy email alapján"
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Rendezési mező (name, email, created_at)"
+								},
+								{
+									"key": "dir",
+									"value": "asc",
+									"description": "Rendezési irány (asc|desc)"
+								}
+							]
+						},
+						"description": "Lista az összes hallgatót kurzusok számával együtt"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Nagy Péter\",\n    \"email\": \"nagy.peter@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/students",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Új hallgató létrehozása"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/students/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"1"
+							]
+						},
+						"description": "Hallgató törlése"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Instructors",
+			"item": [
+				{
+					"name": "Get All Instructors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/instructors?search=&sort=name&dir=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"instructors"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Keresés név vagy email alapján"
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Rendezési mező (name, email, created_at)"
+								},
+								{
+									"key": "dir",
+									"value": "asc",
+									"description": "Rendezési irány (asc|desc)"
+								}
+							]
+						},
+						"description": "Lista az összes oktatót kurzusok számával együtt"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Instructor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. Kovács Anna\",\n    \"email\": \"kovacs.anna@skillforge.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/instructors",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"instructors"
+							]
+						},
+						"description": "Új oktató létrehozása"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact Messages",
+			"item": [
+				{
+					"name": "Get All Contact Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/contact",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"contact"
+							]
+						},
+						"description": "Lista az összes kapcsolati üzenetet időrendi sorrendben"
+					},
+					"response": []
+				},
+				{
+					"name": "Send Contact Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Teszt Felhasználó\",\n    \"email\": \"teszt@example.com\",\n    \"message\": \"Üdvözlöm! Kérdésem van a Laravel kurzussal kapcsolatban. Mikor kezdődik a következő csoport?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/contact",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"contact"
+							]
+						},
+						"description": "Új kapcsolati üzenet küldése"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Testing Examples",
+			"item": [
+				{
+					"name": "Search Courses by Title",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses?search=Laravel&sort=title&dir=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Laravel"
+								},
+								{
+									"key": "sort",
+									"value": "title"
+								},
+								{
+									"key": "dir",
+									"value": "asc"
+								}
+							]
+						},
+						"description": "Kurzus keresése cím alapján"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Active Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/courses?status=active&difficulty=intermediate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "active"
+								},
+								{
+									"key": "difficulty",
+									"value": "intermediate"
+								}
+							]
+						},
+						"description": "Aktív, középszintű kurzusok szűrése"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Complete Course Example",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"React és TypeScript Haladó Technikák\",\n    \"description\": \"Tanulja meg a React és TypeScript legújabb funkcióit. Hooks, Context API, TypeScript generic-ek, performance optimalizáció és tesztelés.\",\n    \"status\": \"planned\",\n    \"difficulty\": \"advanced\",\n    \"instructor_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						},
+						"description": "Teljes kurzus példa létrehozáshoz"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Test Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Teszt Hallgató\",\n    \"email\": \"teszt.hallgato@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/students",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Teszt hallgató létrehozása"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
