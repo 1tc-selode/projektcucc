@@ -119,4 +119,15 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="btn-secondary">
+      Previous
+    </button>
+    <span>Page {{ currentPage }}</span>
+    <button (click)="changePage(currentPage + 1)" class="btn-secondary">
+      Next
+    </button>
+  </div>
 </div>

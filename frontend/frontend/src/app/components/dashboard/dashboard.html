@@ -20,7 +20,7 @@
   
   <h2>Recent Courses</h2>
   <div class="course-list">
-    <div *ngFor="let course of courses$ | async" class="course-item">
+    <div *ngFor="let course of paginatedCourses$ | async" class="course-item">
       <div>
         <strong>{{ course.title }}</strong>
         <span class="badge" [class.badge-active]="course.status === 'active'" 
@@ -31,5 +31,16 @@
       </div>
       <small>{{ course.instructor }}</small>
     </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="btn-secondary">
+      Previous
+    </button>
+    <span>Page {{ currentPage }}</span>
+    <button (click)="changePage(currentPage + 1)" class="btn-secondary">
+      Next
+    </button>
   </div>
 </div>
