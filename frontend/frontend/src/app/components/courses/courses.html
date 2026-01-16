@@ -1,0 +1,131 @@
+<div class="card">
+  <div class="header">
+    <h1>Courses Management</h1>
+    <button (click)="openForm()" class="btn-primary">+ Add Course</button>
+  </div>
+
+  <div class="search-bar">
+    <input 
+      type="text" 
+      placeholder="Search courses..." 
+      (input)="search$.next($any($event.target).value)"
+    />
+  </div>
+
+  <!-- Form Modal -->
+  <div *ngIf="showForm" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ editingId ? 'Edit Course' : 'New Course' }}</h2>
+        <button (click)="closeForm()" class="btn-close">×</button>
+      </div>
+      
+      <form [formGroup]="courseForm" (ngSubmit)="save()">
+        <div class="form-group">
+          <label>Title *</label>
+          <input formControlName="title" placeholder="Course title" />
+          <span class="error" *ngIf="courseForm.get('title')?.invalid && courseForm.get('title')?.touched">
+            Title is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea formControlName="description" placeholder="Course description" rows="4"></textarea>
+          <span class="error" *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched">
+            Description is required
+          </span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Status *</label>
+            <select formControlName="status">
+              <option value="planned">Planned</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Difficulty *</label>
+            <select formControlName="difficulty">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Instructor *</label>
+          <input formControlName="instructor" placeholder="Instructor name" />
+          <span class="error" *ngIf="courseForm.get('instructor')?.invalid && courseForm.get('instructor')?.touched">
+            Instructor is required
+          </span>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="closeForm()" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="courseForm.invalid">
+            {{ editingId ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Courses Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('title')" class="sortable">
+            Title {{ sortBy === 'title' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+          </th>
+          <th>Instructor</th>
+          <th (click)="sort('difficulty')" class="sortable">
+            Difficulty {{ sortBy === 'difficulty' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+          </th>
+          <th>Status</th>
+          <th (click)="sort('created_at')" class="sortable">
+            Created {{ sortBy === 'created_at' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses$ | async">
+          <td><strong>{{ course.title }}</strong></td>
+          <td>{{ course.instructor }}</td>
+          <td>
+            <span class="difficulty-badge" [class]="'difficulty-' + course.difficulty">
+              {{ course.difficulty }}
+            </span>
+          </td>
+          <td>
+            <span class="badge" [class]="'badge-' + course.status">
+              {{ course.status }}
+            </span>
+          </td>
+          <td>{{ course.created_at | date:'short' }}</td>
+          <td class="actions">
+            <button (click)="edit(course)" class="btn-icon btn-edit" title="Edit">✏️</button>
+            <button (click)="del(course.id)" class="btn-icon btn-delete" title="Delete">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="btn-secondary">
+      Previous
+    </button>
+    <span>Page {{ currentPage }}</span>
+    <button (click)="changePage(currentPage + 1)" class="btn-secondary">
+      Next
+    </button>
+  </div>
+</div>

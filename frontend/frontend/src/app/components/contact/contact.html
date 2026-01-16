@@ -1,0 +1,108 @@
+<div class="card">
+  <div class="header">
+    <h1>Contact Us</h1>
+    <p class="subtitle">Have questions? We'd love to hear from you.</p>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="success" class="alert alert-success">
+    <strong>✓ Success!</strong> Your message has been sent successfully. We'll get back to you soon.
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-error">
+    <strong>✗ Error!</strong> Something went wrong. Please try again later.
+  </div>
+
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <input 
+        id="name"
+        type="text" 
+        formControlName="name" 
+        placeholder="Your full name"
+        [class.invalid]="submitted && name?.invalid"
+      />
+      <div class="error-messages">
+        <span *ngIf="submitted && name?.errors?.['required']" class="error">
+          Name is required
+        </span>
+        <span *ngIf="submitted && name?.errors?.['minlength']" class="error">
+          Name must be at least 3 characters
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input 
+        id="email"
+        type="email" 
+        formControlName="email" 
+        placeholder="your.email@example.com"
+        [class.invalid]="submitted && email?.invalid"
+      />
+      <div class="error-messages">
+        <span *ngIf="submitted && email?.errors?.['required']" class="error">
+          Email is required
+        </span>
+        <span *ngIf="submitted && email?.errors?.['email']" class="error">
+          Please enter a valid email address
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message *</label>
+      <textarea 
+        id="message"
+        formControlName="message" 
+        placeholder="Tell us what's on your mind..."
+        rows="6"
+        [class.invalid]="submitted && message?.invalid"
+      ></textarea>
+      <div class="error-messages">
+        <span *ngIf="submitted && message?.errors?.['required']" class="error">
+          Message is required
+        </span>
+        <span *ngIf="submitted && message?.errors?.['minlength']" class="error">
+          Message must be at least 10 characters
+        </span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="submitted && contactForm.invalid">
+        Send Message
+      </button>
+    </div>
+  </form>
+
+  <div class="contact-info">
+    <h3>Other ways to reach us</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="icon">📧</span>
+        <div>
+          <strong>Email</strong>
+          <p>info@coursemanagement.com</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="icon">📞</span>
+        <div>
+          <strong>Phone</strong>
+          <p>+1 (555) 123-4567</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="icon">📍</span>
+        <div>
+          <strong>Address</strong>
+          <p>123 Education Street, Learning City, 12345</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
