@@ -44,7 +44,7 @@ export class Student {
   }
 
   assignCourse(studentId: number, courseId: number) {
-    return this.http.post(`${this.api}/${studentId}/courses`, { course_id: courseId });
+    return this.http.post(`${this.api}/${studentId}/courses/${courseId}`, {});
   }
 
   removeCourse(studentId: number, courseId: number) {

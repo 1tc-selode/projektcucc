@@ -9,7 +9,7 @@ class Instructor extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['name','email'];
+    protected $fillable = ['name', 'email', 'phone', 'expertise', 'bio'];
 
     public function courses() {
         return $this->hasMany(Course::class);

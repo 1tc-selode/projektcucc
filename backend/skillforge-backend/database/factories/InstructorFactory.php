@@ -17,9 +17,19 @@ class InstructorFactory extends Factory
      */
     public function definition(): array
     {
+        $expertiseOptions = [
+            'Web Development', 'Mobile App Development', 'Data Science', 
+            'Machine Learning', 'DevOps', 'Cloud Computing',
+            'Cybersecurity', 'UI/UX Design', 'Backend Development',
+            'Frontend Development', 'Full-Stack Development', 'Python Programming'
+        ];
+        
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->optional(0.8)->phoneNumber(),
+            'expertise' => fake()->randomElement($expertiseOptions),
+            'bio' => fake()->optional(0.7)->realText(200),
             'created_at' => fake()->dateTimeBetween('-2 years', 'now'),
             'updated_at' => now(),
         ];

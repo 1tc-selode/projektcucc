@@ -17,11 +17,15 @@ Route::apiResource('courses', CourseController::class);
 Route::post('courses/{course}/students/{student}', [CourseController::class, 'attachStudent']);
 Route::delete('courses/{course}/students/{student}', [CourseController::class, 'detachStudent']);
 
-// Student operations (index, store, destroy only)
-Route::apiResource('students', StudentController::class)->only(['index','store','destroy']);
+// Student operations (full CRUD)
+Route::apiResource('students', StudentController::class);
 
-// Instructor operations (index, store only)
-Route::apiResource('instructors', InstructorController::class)->only(['index','store']);
+// Student-Course relationship endpoints
+Route::post('students/{student}/courses/{course}', [StudentController::class, 'assignCourse']);
+Route::delete('students/{student}/courses/{course}', [StudentController::class, 'unassignCourse']);
+
+// Instructor operations (full CRUD)
+Route::apiResource('instructors', InstructorController::class);
 
 // Contact messages
 Route::get('contact', [ContactController::class,'index']);
