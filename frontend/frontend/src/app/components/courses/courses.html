@@ -97,7 +97,7 @@
       <tbody>
         <tr *ngFor="let course of courses$ | async">
           <td><strong>{{ course.title }}</strong></td>
-          <td>{{ course.instructor }}</td>
+          <td>{{ course.instructor?.name || 'N/A' }}</td>
           <td>
             <span class="difficulty-badge" [class]="'difficulty-' + course.difficulty">
               {{ course.difficulty }}

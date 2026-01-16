@@ -15,10 +15,16 @@ export class Instructor {
     this.load();
   }
 
-  load(search: string = '', sortBy: string = 'name', sortOrder: string = 'asc') {
-    const params = `?search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+  load(search: string = '', sortBy: string = 'name', sortOrder: string = 'asc', page: number = 1) {
+    const params = `?search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}`;
     this.http.get<any>(`${this.api}${params}`)
-      .subscribe(res => this.instructorsSubject.next(res.data || res));
+      .subscribe({
+        next: (res) => this.instructorsSubject.next(res.data || res || []),
+        error: (err) => {
+          console.error('Failed to load instructors:', err);
+          this.instructorsSubject.next([]);
+        }
+      });
   }
 
   getById(id: number) {

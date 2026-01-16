@@ -46,7 +46,7 @@ export class Students {
     this.search$.pipe(debounceTime(300))
       .subscribe(v => {
         this.searchValue = v;
-        this.studentService.load(v, this.sortBy, this.sortOrder);
+        this.studentService.load(v, this.sortBy, this.sortOrder, this.currentPage);
       });
   }
 
@@ -69,12 +69,12 @@ export class Students {
     
     if (this.editingId) {
       this.studentService.update(this.editingId, data).subscribe(() => {
-        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
+        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
         this.closeForm();
       });
     } else {
       this.studentService.create(data).subscribe(() => {
-        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
+        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
         this.closeForm();
       });
     }
@@ -89,7 +89,7 @@ export class Students {
   del(id: number) {
     if (confirm('Are you sure?')) {
       this.studentService.delete(id).subscribe(() => 
-        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder)
+        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage)
       );
     }
   }
@@ -101,7 +101,7 @@ export class Students {
       this.sortBy = field;
       this.sortOrder = 'asc';
     }
-    this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
+    this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
   }
 
   openCourseAssign(student: any) {
@@ -126,13 +126,13 @@ export class Students {
   removeCourse(studentId: number, courseId: number) {
     if (confirm('Remove this course?')) {
       this.studentService.removeCourse(studentId, courseId).subscribe(() => {
-        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
+        this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
       });
     }
   }
 
   changePage(page: number) {
     this.currentPage = page;
-    this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
+    this.studentService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
   }
 }
