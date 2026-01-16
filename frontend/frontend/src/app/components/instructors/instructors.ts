@@ -41,7 +41,7 @@ export class Instructors {
     this.search$.pipe(debounceTime(300))
       .subscribe(v => {
         this.searchValue = v;
-        this.instructorService.load(v, this.sortBy, this.sortOrder);
+        this.instructorService.load(v, this.sortBy, this.sortOrder, this.currentPage);
       });
   }
 
@@ -64,12 +64,12 @@ export class Instructors {
     
     if (this.editingId) {
       this.instructorService.update(this.editingId, data).subscribe(() => {
-        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder);
+        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
         this.closeForm();
       });
     } else {
       this.instructorService.create(data).subscribe(() => {
-        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder);
+        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
         this.closeForm();
       });
     }
@@ -84,7 +84,7 @@ export class Instructors {
   del(id: number) {
     if (confirm('Are you sure?')) {
       this.instructorService.delete(id).subscribe(() => 
-        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder)
+        this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage)
       );
     }
   }
@@ -96,11 +96,11 @@ export class Instructors {
       this.sortBy = field;
       this.sortOrder = 'asc';
     }
-    this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder);
+    this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
   }
 
   changePage(page: number) {
     this.currentPage = page;
-    this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder);
+    this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder, this.currentPage);
   }
 }
