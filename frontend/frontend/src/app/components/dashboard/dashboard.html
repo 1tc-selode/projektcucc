@@ -29,7 +29,7 @@
           {{ course.status }}
         </span>
       </div>
-      <small>{{ course.instructor }}</small>
+      <small>{{ course.instructor?.name || 'N/A' }}</small>
     </div>
   </div>
 
