@@ -58,10 +58,10 @@
         </div>
 
         <div class="form-group">
-          <label>Instructor *</label>
-          <input formControlName="instructor" placeholder="Instructor name" />
-          <span class="error" *ngIf="courseForm.get('instructor')?.invalid && courseForm.get('instructor')?.touched">
-            Instructor is required
+          <label>Instructor ID *</label>
+          <input type="number" formControlName="instructor_id" placeholder="Instructor ID (e.g., 1)" />
+          <span class="error" *ngIf="courseForm.get('instructor_id')?.invalid && courseForm.get('instructor_id')?.touched">
+            Instructor ID is required
           </span>
         </div>
 
