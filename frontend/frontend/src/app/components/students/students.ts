@@ -26,6 +26,7 @@ export class Students {
   
   sortBy = 'name';
   sortOrder = 'asc';
+  currentPage = 1;
 
   constructor(
     private studentService: Student,
@@ -128,5 +129,10 @@ export class Students {
         this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
       });
     }
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+    this.studentService.load(this.searchValue, this.sortBy, this.sortOrder);
   }
 }

@@ -22,6 +22,7 @@ export class Instructors {
   
   sortBy = 'name';
   sortOrder = 'asc';
+  currentPage = 1;
 
   constructor(
     private instructorService: Instructor,
@@ -95,6 +96,11 @@ export class Instructors {
       this.sortBy = field;
       this.sortOrder = 'asc';
     }
+    this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder);
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
     this.instructorService.load(this.searchValue, this.sortBy, this.sortOrder);
   }
 }
